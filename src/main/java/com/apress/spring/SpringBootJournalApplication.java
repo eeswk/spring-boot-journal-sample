@@ -1,6 +1,7 @@
 package com.apress.spring;
 
 import com.apress.spring.domain.Journal;
+import com.apress.spring.redis.Producer;
 import com.apress.spring.repository.JournalRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -111,6 +112,17 @@ public class SpringBootJournalApplication implements CommandLineRunner, Applicat
             log.info(" > 서버 IP : " + serverIp);
             log.info(" > 애플리케이션명 : " + props.getName());
             log.info(" > 애플리케이션 정보 : " + props.getDescription());
+        };
+    }
+
+    @Value("${topic}")
+    String topic;
+
+    @Bean
+    CommandLineRunner sendMessage(Producer producer) {
+        return args ->  {
+            log.info(" > 레디스 : ");
+            producer.sendTo(topic, "스프링 부트와 레디스 메시징 처리");
         };
     }
 
