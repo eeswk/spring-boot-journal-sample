@@ -1,0 +1,36 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>스프링부트 웹 소켓</title>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/sockjs-client/1.4.0/sockjs.min.js"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/stomp.js/2.3.3/stomp.min.js"></script>
+</head>
+<body>
+    <div>
+        <h3>메시지:</h3>
+        <ol id="message"></ol>
+    </div>
+    <script type="text/javascript">
+        $(document).ready(function () {
+            var messageList = $("#message");
+            var socket = new SockJS('/stomp')
+            var stompClient = Stomp.over(socket);
+
+            stompClient.connect({},function (frame) {
+                stompClient.subscribe("/topic/message", function (data) {
+                    var message = data.body;
+                    messageList.append("<li>" + message + "</li>");
+                });
+            });
+        });
+
+    </script>
+
+
+</body>
+</html>
