@@ -3,6 +3,7 @@ package com.apress.spring;
 import com.apress.spring.domain.Journal;
 import com.apress.spring.redis.Producer;
 import com.apress.spring.repository.JournalRepository;
+import com.apress.spring.service.JournalService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.InitializingBean;
@@ -39,6 +40,20 @@ public class SpringBootJournalApplication implements CommandLineRunner, Applicat
             repo.save(new Journal("스프링 부트 클라우드", "클라우드 파운드리를 응용한 스타일", "03/01/2020"));
         };
     }
+
+    @Autowired
+    JournalService journalService;
+
+    @Bean
+    CommandLineRunner jdbcSaveData() {
+        return args -> {
+            log.info("@@ 데이터 생성");
+            journalService.insertData();
+            log.info("@@ findAll 호출");
+            journalService.findAll().forEach(entry -> log.info(entry.toString()));
+        };
+    }
+
 
     public static void main(String[] args) {
         //SpringApplication.run(SpringBootJournalApplication.class, args);
