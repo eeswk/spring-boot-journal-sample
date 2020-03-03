@@ -56,7 +56,7 @@ public class SpringBootJournalApplication implements CommandLineRunner, Applicat
         };
     }
 
-
+/*
     @Bean
     CommandLineRunner start(JournalMongoRepository repo) {
         return args -> {
@@ -72,6 +72,8 @@ public class SpringBootJournalApplication implements CommandLineRunner, Applicat
             repo.findByTitleLike("테스트").forEach(entry -> log.info(entry.toString()));
         };
     }
+
+ */
 
 
     public static void main(String[] args) {

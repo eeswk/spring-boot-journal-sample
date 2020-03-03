@@ -3,10 +3,14 @@ package com.apress.spring.repository;
 import com.apress.spring.domain.Journal;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.rest.core.annotation.RepositoryRestResource;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Date;
 import java.util.List;
 
+@Transactional
+@RepositoryRestResource(collectionResourceRel = "entry", path = "journal")
 public interface JournalRepository extends JpaRepository<Journal, Long> {
 
     public List<Journal> findByTitleContaining(String word);

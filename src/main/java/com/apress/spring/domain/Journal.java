@@ -1,5 +1,11 @@
 package com.apress.spring.domain;
 
+import com.apress.spring.utils.JsonDateSerializer;
+import com.fasterxml.jackson.databind.JsonDeserializer;
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+import net.minidev.json.annotate.JsonIgnore;
+
 import javax.persistence.*;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -44,6 +50,7 @@ public class Journal {
         this.title = title;
     }
 
+    @JsonSerialize(using = JsonDateSerializer.class)
     public Date getCreated() {
         return created;
     }
@@ -59,7 +66,7 @@ public class Journal {
     public void setSummary(String summary) {
         this.summary = summary;
     }
-
+    @JsonIgnore
     public String getCreatedAsShort() {
         return format.format(created);
     }
