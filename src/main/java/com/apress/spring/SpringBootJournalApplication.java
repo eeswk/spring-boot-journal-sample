@@ -1,7 +1,9 @@
 package com.apress.spring;
 
 import com.apress.spring.domain.Journal;
+import com.apress.spring.domain.JournalMongo;
 import com.apress.spring.redis.Producer;
+import com.apress.spring.repository.JournalMongoRepository;
 import com.apress.spring.repository.JournalRepository;
 import com.apress.spring.service.JournalService;
 import org.slf4j.Logger;
@@ -51,6 +53,23 @@ public class SpringBootJournalApplication implements CommandLineRunner, Applicat
             journalService.insertData();
             log.info("@@ findAll 호출");
             journalService.findAll().forEach(entry -> log.info(entry.toString()));
+        };
+    }
+
+
+    @Bean
+    CommandLineRunner start(JournalMongoRepository repo) {
+        return args -> {
+            log.info("@@ 몽고 데이터 삭제");
+            repo.deleteAll();
+            log.info("@@ 몽고 데이터 생성");
+            repo.save(new JournalMongo("스프링부트 몽고 데이터베이스","몽고데이터 공부 시작!", "03/01/2020"));
+            repo.save(new JournalMongo("스프링부트 몽고 데이터베이스 테스트","몽고데이터 생성 테스트", "03/02/2020"));
+            repo.save(new JournalMongo("스프링부트 몽고 데이터베이스 저장","몽고데이터 저장", "03/03/2020"));
+            log.info("@@ 몽고 데이터 조회");
+            repo.findAll().forEach(entry -> log.info(entry.toString()));
+            log.info("@@ 몽고 데이터 Like 검색");
+            repo.findByTitleLike("테스트").forEach(entry -> log.info(entry.toString()));
         };
     }
 
