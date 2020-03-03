@@ -11,6 +11,7 @@ public class Journal {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
+
     private String title;
     private Date created;
     private String summary;

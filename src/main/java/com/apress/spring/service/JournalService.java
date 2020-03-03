@@ -21,10 +21,10 @@ public class JournalService {
 
     public void insertData() {
         log.info("> 테이블 생성");
-        jdbcTemplate.execute("DROP TABLE JOURNAL IF EXISTS");
-        jdbcTemplate.execute("CREATE TABLE JOURNAL(id SERIAL, title VARCHAR(255), summary VARCHAR (255), created TIMESTAMP )");
+        //jdbcTemplate.execute("DROP TABLE JOURNAL IF EXISTS");
+        //jdbcTemplate.execute("CREATE TABLE JOURNAL(id SERIAL, title VARCHAR(255), summary VARCHAR (255), created TIMESTAMP )");
         log.info("> 데이터 생성");
-        jdbcTemplate.execute("INSERT INTO JOURNAL (title, summary, created) VALUES ('스프링부트 입문', '오늘부터 스프링부트를 배우다.', '2020-03-03 00:00:00.00')");
+        jdbcTemplate.execute("INSERT INTO JOURNAL (title, summary, created, id) VALUES ('스프링부트 고급', '스프링 애너테이션을 만들다.', '2020-03-03 00:00:00.00','5')");
         log.info("> 완료");
     }
 
