@@ -3,6 +3,8 @@ package com.apress.spring.web;
 import com.apress.spring.domain.Journal;
 import com.apress.spring.repository.JournalRepository;
 import com.apress.spring.websocket.WebsocketProducer;
+import io.micrometer.core.instrument.Counter;
+import io.micrometer.core.instrument.MeterRegistry;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -33,8 +35,14 @@ public class JournalController {
 //    @Autowired
 //    private WebsocketProducer producer;
 
+    @Autowired
+    private MeterRegistry meterRegistry;
+
+
     @GetMapping("/")
     public String index(Model model) {
+        meterRegistry.counter("counter.index.invoked").increment();
+        //counter.increment();
         model.addAttribute("journal", repository.findAll());
         System.out.println(repository.findAll());
         return "index";
