@@ -32,3 +32,4 @@ HELP.md
 .mvn/
 mvnw
 mvnw.cmd
+/mylog.log
